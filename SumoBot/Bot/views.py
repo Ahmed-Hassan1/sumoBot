@@ -297,11 +297,11 @@ def FirstBot(request):
                     except Exception as e:
                         logger.info("NEW ENTRY 4")
                         logger.info(e)
-
+                entries.save()
         except Exception as e:
             logger.error(e)
 
-        entries.save()
+        
     except Exception as e:
         logger.error(e)
 
