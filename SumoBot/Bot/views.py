@@ -320,11 +320,12 @@ def targetModify(tp,entry):
 def addTargetToEntries(oldEntry,newEntry,tp):
     return "{:0.0{}f}".format((float(oldEntry)+float(newEntry))/2+float(tp), price_precision)
 
-from apscheduler.schedulers.background import BackgroundScheduler
+
 @csrf_exempt
 def testing(request):
     entries=Entries.objects.all().first()
     #Calculte QTY
+    client.get_open_orders()
     info = client.futures_get_order(symbol=symbol,clientOrderId=entries.clientOrderId2,orderId=entries.orderId2)
     print(info)
     return JsonResponse({"hello":"hhh"},safe=False)

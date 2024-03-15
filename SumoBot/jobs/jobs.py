@@ -25,7 +25,7 @@ def job_1():
                     currAmount+=float(obj['positionAmt'])
                     _entryPrice+=float(obj['entryPrice'])
             if openTrades>0:
-                entries=Entries.objects.last()
+                entries=Entries.objects.all().first()
                 #info=client.futures_symbol_ticker(symbol=symbol)
                 #currentPrice=float(info['price'])
                 #print(currentPrice)
@@ -42,13 +42,22 @@ def job_1():
 
                         #Profit
                         try:
-                            try:
-                                info=client.futures_cancel_order(symbol=symbol,clientOrderId=entries.targetClientIdBase,orderId=entries.targetOrderIdBase)
-                            except Exception as e:
-                                logger.error(e)
+                            
                             logger.info("Cancel 1")
                             logger.info(_entryPrice)
                             qty=int(float(entries.entryQuant))+int(float(entries.newEntryQuant))
+                            try:
+                                data=client.futures_get_open_orders(symbol=symbol)
+                                for order in data:
+                                    logger.info(order['status'])
+                                    logger.info(order['side'])
+                                    logger.info(order['clientOrderId'])
+                                    logger.info(order['orderId'])
+                                    if float(order['origQty'])<qty:
+                                        info=client.futures_cancel_order(symbol=symbol,clientOrderId=order['clientOrderId'],orderId=order['orderId'])
+                                        logger.info(info)
+                            except Exception as e:
+                                logger.error(e)
                             #nT="{:0.0{}f}".format(float(entries.targetDist)+_entryPrice, price_precision)
                             #data=client.futures_create_order(symbol=symbol, type=Client.FUTURE_ORDER_TYPE_LIMIT, side=Client.SIDE_SELL, quantity=qty,price=entries.newTarget,timeinforce=Client.TIME_IN_FORCE_GTC)
                             logger.info("SENDING P1")
@@ -78,13 +87,22 @@ def job_1():
 
                         #Profit
                         try:
-                            try:
-                                info=client.futures_cancel_order(symbol=symbol,clientOrderId=entries.targetClientId,orderId=entries.targetOrderId)
-                            except Exception as e:
-                                logger.error(e)
+                            
                             logger.info("Cancel 2")
                             logger.info(_entryPrice)
                             qty=int(float(entries.entryQuant))+int(float(entries.newEntryQuant))+int(float(entries.newEntryQuant2))
+                            try:
+                                data=client.futures_get_open_orders(symbol=symbol)
+                                for order in data:
+                                    logger.info(order['status'])
+                                    logger.info(order['side'])
+                                    logger.info(order['clientOrderId'])
+                                    logger.info(order['orderId'])
+                                    if float(order['origQty'])<qty:
+                                        info=client.futures_cancel_order(symbol=symbol,clientOrderId=order['clientOrderId'],orderId=order['orderId'])
+                                        logger.info(info)
+                            except Exception as e:
+                                logger.error(e)
                             #nT="{:0.0{}f}".format(float(entries.targetDist)+_entryPrice, price_precision)
                             #data=client.futures_create_order(symbol=symbol, type=Client.FUTURE_ORDER_TYPE_LIMIT, side=Client.SIDE_SELL, quantity=qty,price=nT,timeinforce=Client.TIME_IN_FORCE_GTC)
                             logger.info("SENDING P2")
@@ -114,13 +132,21 @@ def job_1():
 
                         #Profit
                         try:
-                            try:
-                                info=client.futures_cancel_order(symbol=symbol,clientOrderId=entries.targetClientId2,orderId=entries.targetOrderId2)
-                            except Exception as e:
-                                logger.error(e)
                             logger.info("Cancel 3")
                             logger.info(_entryPrice)
                             qty=int(float(entries.entryQuant))+int(float(entries.newEntryQuant))+int(float(entries.newEntryQuant2))+int(float(entries.newEntryQuant3))
+                            try:
+                                data=client.futures_get_open_orders(symbol=symbol)
+                                for order in data:
+                                    logger.info(order['status'])
+                                    logger.info(order['side'])
+                                    logger.info(order['clientOrderId'])
+                                    logger.info(order['orderId'])
+                                    if float(order['origQty'])<qty:
+                                        info=client.futures_cancel_order(symbol=symbol,clientOrderId=order['clientOrderId'],orderId=order['orderId'])
+                                        logger.info(info)
+                            except Exception as e:
+                                logger.error(e)
                             #nT="{:0.0{}f}".format(float(entries.targetDist)+_entryPrice, price_precision)
                             #data=client.futures_create_order(symbol=symbol, type=Client.FUTURE_ORDER_TYPE_LIMIT, side=Client.SIDE_SELL, quantity=qty,price=nT,timeinforce=Client.TIME_IN_FORCE_GTC)
                             logger.info("SENDING P3")
@@ -151,13 +177,21 @@ def job_1():
 
                         #Profit
                         try:
-                            try:
-                                info=client.futures_cancel_order(symbol=symbol,clientOrderId=entries.targetClientId3,orderId=entries.targetOrderId3)
-                            except Exception as e:
-                                logger.error(e)
                             logger.info("Cancel 4")
                             logger.info(_entryPrice)
                             qty=int(float(entries.entryQuant))+int(float(entries.newEntryQuant))+int(float(entries.newEntryQuant2))+int(float(entries.newEntryQuant3))+int(float(entries.newEntryQuant4))
+                            try:
+                                data=client.futures_get_open_orders(symbol=symbol)
+                                for order in data:
+                                    logger.info(order['status'])
+                                    logger.info(order['side'])
+                                    logger.info(order['clientOrderId'])
+                                    logger.info(order['orderId'])
+                                    if float(order['origQty'])<qty:
+                                        info=client.futures_cancel_order(symbol=symbol,clientOrderId=order['clientOrderId'],orderId=order['orderId'])
+                                        logger.info(info)
+                            except Exception as e:
+                                logger.error(e)
                             #nT="{:0.0{}f}".format(float(entries.targetDist)+_entryPrice, price_precision)
                             #data=client.futures_create_order(symbol=symbol, type=Client.FUTURE_ORDER_TYPE_LIMIT, side=Client.SIDE_SELL, quantity=qty,price=nT,timeinforce=Client.TIME_IN_FORCE_GTC)
                             logger.info("SENDING P4")
