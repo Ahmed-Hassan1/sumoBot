@@ -29,14 +29,17 @@ def FirstBot(request):
                     profit+=float(obj['unrealizedProfit'])
             if openTrades==0:
                 #Get different messages
-                msg=dict(request.GET)['txt'][0]
-                msgJson=json.loads(msg)
+                #msg=request.GET
+                #logger.info(msg)
+                #msgJson=json.loads(msg)
+                msgJson=request.GET
                 #msgJson=json.loads('{"Entry": "0.4239","Target": "65000","Stop": "50000","New Entry": "59000","New Target": "61000"}')
-
+                
+                logger.info(msgJson)
                 #Parse the message to get individual 
-                info=client.futures_symbol_ticker(symbol=symbol)
-                currentPrice=info['price']
-                logger.info("Price: "+str(currentPrice))
+                #info=client.futures_symbol_ticker(symbol=symbol)
+                #currentPrice=info['price']
+                #logger.info("Price: "+str(currentPrice))
 
 
                 entry=currentPrice
@@ -188,7 +191,7 @@ def FirstBot(request):
 
 
                 logger.info("No Open Trades for current Symbol")
-                if balance>=100:
+                if False:#balance>=100:
                     try:
                         #Entry
                         logger.info("Entry")
