@@ -62,3 +62,7 @@ class Entries(models.Model):
 
 class TEST(models.Model):
     running=models.BooleanField(blank=True,null=True,default=True)
+
+
+class SecondBot(models.Model):
+    pass
