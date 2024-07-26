@@ -65,4 +65,6 @@ class TEST(models.Model):
 
 
 class SecondBot(models.Model):
-    pass
+    currentDay=models.DateField()
+    dailyProfit=models.FloatField(default=0)
+    startingDayBalance=models.FloatField(default=1000)

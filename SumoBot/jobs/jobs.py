@@ -2,12 +2,17 @@ from Bot.models import Entries,TEST
 from binance.client import Client
 import logging
 
+
+#TESTING API
+# key="bfcd95fbe7c9f7d49ef50f3eb01d82b80a519138371d7407d76c09269bd3b87f"
+# secret="212bf5426c9902574b0ef25d78b6d6a026d9453a68eba486a595d6c8970178aa"
+# symbol="BTCUSDT"
 logger=logging.getLogger("jobs")
 
 key="5AciUnbYRHOp3jqFPQDUCqjzrM4Gt6iY9Rk1lK4XbPrDguCDh5FzQCZZd7aEsX1p"
 secret="1RBXR8IdgU9Vrk0EGUHL5ELfXAydjUDM9csQH1btme9SLxfl8LpLdaShWYoJ2RE6"
 client = Client(api_key=key,api_secret=secret)
-symbol="CHRUSDT"
+#symbol="CHRUSDT"
 price_precision=4
 def job_1():
     isRunning=TEST.objects.all().first()
@@ -210,6 +215,30 @@ def job_1():
                 #print(info)  
                 isRunning.running=False
                 isRunning.save()
+        except Exception as e:
+            logger.error("GENERAL JOBS ERROR")
+
+            logger.error(e)
+
+
+
+def job_2():
+
+    if True:
+        try:
+            info = client.futures_account()['positions']
+            openTrades=0
+            currAmount=0
+            _entryPrice=0
+            for obj in info:
+                if float(obj['maintMargin'])>0:
+                    #print(obj)
+                    openTrades+=1
+                    currAmount+=float(obj['positionAmt'])
+                    _entryPrice+=float(obj['entryPrice'])
+            if openTrades==0:
+                client.futures_cancel_all_open_orders(symbol=symbol)
+                
         except Exception as e:
             logger.error("GENERAL JOBS ERROR")
 
